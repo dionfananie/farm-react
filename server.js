@@ -8,6 +8,7 @@ function resolve(p) {
 
 async function createServer() {
   let app = express();
+  console.log("path:", resolve("build"));
 
   app.use(express.static(resolve("build")));
 

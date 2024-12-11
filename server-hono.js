@@ -13,10 +13,10 @@ async function createServer() {
   const app = new Hono();
 
   // Serve static files from build directory
-  app.use("/*", serveStatic({ root: resolvePath("build") }));
+  app.use("*", serveStatic({ root: "./build" }));
 
   // Main route handler
-  app.get("*", async (c) => {
+  app.use("/", async (c) => {
     const url = c.req.url;
 
     try {

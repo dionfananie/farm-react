@@ -1,4 +1,4 @@
-import path from "path";
+const path = require("path");
 const fsp = require("fs/promises");
 const fastify = require("fastify");
 const fastifyStatic = require("@fastify/static");
@@ -12,39 +12,16 @@ async function createServer() {
     logger: true
   });
 
-  // Main route handler - register this BEFORE static to take precedence
-  app.get("/", async (request, reply) => {
-    try {
-      let template = await fsp.readFile(
-        resolve("build/index_client.html"),
-        "utf8"
-      );
-      const serverEntry = resolve("dist/index.js");
-      const render = require(serverEntry);
-
-      const renderedHtml = render(request.url);
-      console.log(renderedHtml);
-
-      let html = template.replace("{app-html-to-replace}", renderedHtml);
-      console.log(template.includes("{app-html-to-replace}"));
-      console.log(html.includes("{app-html-to-replace}"));
-
-      return reply.type("text/html").code(200).send(html);
-    } catch (error) {
-      console.log(error.stack);
-      return reply.code(500).send(error.stack);
-    }
-  });
-
-  // Register static file handling after the main route
+  // Register static file handling
   await app.register(fastifyStatic, {
-    root: resolve("build"),
-    prefix: "/static/", // Changed to /static/ prefix to avoid conflicts
-    decorateReply: false // Prevents conflicts with other plugins
+    root: path.join(__dirname, "build")
+    // prefix: "/" // serve all static files at root path
   });
 
-  // Catch-all route for other paths that should render the app
-  app.get("/*", async (request, reply) => {
+  // Main route handler
+  app.get("/", async (request, reply) => {
+    let url = request.url;
+
     try {
       let template = await fsp.readFile(
         resolve("build/index_client.html"),
@@ -53,17 +30,17 @@ async function createServer() {
       const serverEntry = resolve("dist/index.js");
       const render = require(serverEntry);
 
-      const renderedHtml = render(request.url);
+      const renderedHtml = render(url);
       console.log(renderedHtml);
 
       let html = template.replace("{app-html-to-replace}", renderedHtml);
       console.log(template.includes("{app-html-to-replace}"));
       console.log(html.includes("{app-html-to-replace}"));
 
-      return reply.type("text/html").code(200).send(html);
+      reply.type("text/html").code(200).send(html);
     } catch (error) {
       console.log(error.stack);
-      return reply.code(500).send(error.stack);
+      reply.code(500).send(error.stack);
     }
   });
 
