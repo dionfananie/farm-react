@@ -1,26 +1,29 @@
 {
-  "name": "farm-react",
+  "name": "farm-project",
   "version": "1.0.0",
   "scripts": {
     "start": "farm start",
     "watch": "farm watch --config farm.config.server.ts",
     "build": "pnpm build:server && farm build",
     "build:server": "farm build --config farm.config.server.ts",
-    "preview": "node server.js"
+    "preview": "node server.js",
+    "clean": "farm clean"
   },
   "dependencies": {
+    "@fastify/static": "^8.0.3",
     "@hono/node-server": "^1.13.7",
     "express": "^4.18.2",
+    "fastify": "^5.1.0",
     "hono": "^4.6.13",
     "react": "18",
     "react-dom": "18",
-    "react-router-dom": "^6.13.0"
+    "react-router-dom": "6.13"
   },
   "devDependencies": {
     "@farmfe/cli": "^1.0.2",
     "@farmfe/core": "^1.3.0",
     "@farmfe/plugin-react": "^1.2.0",
-    "@types/koa": "^2.15.0",
+    "@farmfe/plugin-sass": "^1.1.0",
     "@types/react": "18",
     "@types/react-dom": "18",
     "core-js": "^3.36.1",

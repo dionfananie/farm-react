@@ -1,10 +1,6 @@
 import { defineConfig } from "@farmfe/core";
 import path from "path";
-/**
- * @type {import('@farmfe/core').UserConfig}
- */
 export default defineConfig({
-  plugins: ["@farmfe/plugin-react"],
   compilation: {
     input: {
       index_client: "./index.html"
@@ -29,7 +25,7 @@ export default defineConfig({
     cors: true,
     middlewares: [
       (server) => {
-        server.app().use(async (ctx, next) => {
+        server.app().use(async (ctx: any, next: any) => {
           await next();
           if (ctx.path === "/" || ctx.status === 404) {
             // console.log('ctx.path', ctx.path);
@@ -58,5 +54,6 @@ export default defineConfig({
         });
       }
     ]
-  }
+  },
+  plugins: ["@farmfe/plugin-react", "@farmfe/plugin-sass"]
 });

@@ -57,7 +57,7 @@ async function createServer() {
 }
 
 // Start the server
-const port = parseInt(process.env.FARM_DEFAULT_SERVER_PORT || "3000");
+const port = parseInt(process.env.FARM_DEFAULT_SERVER_PORT || "3002");
 const app = await createServer();
 
 export default {
