@@ -15,7 +15,7 @@ async function createServer() {
   // Register static file handling
   await app.register(fastifyStatic, {
     root: path.join(__dirname, "build"),
-    // prefix: "/" // serve all static files at root path
+    prefix: "/", // serve all static files at root path
   });
 
   // Main route handler
@@ -50,6 +50,8 @@ async function createServer() {
 createServer().then((app) => {
   const port = process.env.FARM_DEFAULT_SERVER_PORT || 3000;
   app.listen({ port: port }, (err) => {
+    console.log("port: ", port);
+
     if (err) {
       app.log.error(err);
       process.exit(1);
