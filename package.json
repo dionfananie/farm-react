@@ -4,7 +4,7 @@
   "scripts": {
     "start": "farm start",
     "watch": "farm watch --config farm.config.server.ts",
-    "build": "pnpm build:server && farm build",
+    "build": "bun run build:server && farm build",
     "build:server": "farm build --config farm.config.server.ts",
     "preview": "node server.js",
     "clean": "farm clean"
