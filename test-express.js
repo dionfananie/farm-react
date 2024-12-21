@@ -1,8 +1,8 @@
 import http from "k6/http";
 export const options = {
-  vus: 1000,
+  vus: 100,
   duration: "5s",
 };
 export default function () {
-  http.get("http://localhost:3000");
+  http.get("http://103.186.1.74:3000/");
 }
