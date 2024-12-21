@@ -11,13 +11,13 @@ async function createServer() {
   const app = fastify({
     logger: true,
   });
+  console.log("path:", path.join(__dirname, "build"));
 
   // Register static file handling
   await app.register(fastifyStatic, {
     root: path.join(__dirname, "build"),
     prefix: "/", // serve all static files at root path
   });
-
   // Main route handler
   app.get("/", async (request, reply) => {
     let url = request.url;
@@ -49,7 +49,7 @@ async function createServer() {
 
 createServer().then((app) => {
   const port = process.env.FARM_DEFAULT_SERVER_PORT || 3000;
-  app.listen({ port: port }, (err) => {
+  app.listen({ port, host: "0.0.0.0" }, (err) => {
     console.log("port: ", port);
 
     if (err) {
