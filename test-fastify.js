@@ -4,5 +4,5 @@ export const options = {
   duration: "5s",
 };
 export default function () {
-  http.get("http://localhost:3001");
+  http.get("http://103.186.1.74:3001");
 }
