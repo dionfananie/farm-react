@@ -1,9 +1,9 @@
-import { Hono } from "hono";
-import { serveStatic } from "@hono/node-server/serve-static";
-import { resolve } from "path";
-import { readFile } from "fs/promises";
+const { Hono } = require("hono");
+const { serveStatic } = require("@hono/node-server/serve-static");
+const { resolve } = require("path");
+const { readFile } = require("fs").promises;
 
-const __dirname = import.meta.dir; // Bun-specific way to get directory name
+// const __dirname = import.meta.dir; // Bun-specific way to get directory name
 
 function resolvePath(p) {
   return resolve(__dirname, p);
@@ -42,13 +42,13 @@ async function createServer() {
       // Return the complete HTML
       return new Response(html, {
         headers: {
-          "Content-Type": "text/html"
-        }
+          "Content-Type": "text/html",
+        },
       });
     } catch (error) {
       console.error(error.stack);
       return new Response(error.stack, {
-        status: 500
+        status: 500,
       });
     }
   });
@@ -62,5 +62,5 @@ const app = await createServer();
 
 export default {
   port,
-  fetch: app.fetch
+  fetch: app.fetch,
 };
