@@ -10,14 +10,7 @@ export default defineConfig({
       publicPath: "/static/",
       assetsFilename: "static/[resourceName].[hash].[ext]",
     },
-    partialBundling: {
-      groups: [
-        {
-          name: "components",
-          test: ["./src/components"],
-        },
-      ],
-    },
+
     sourcemap: true,
     css: {
       // modules: {
