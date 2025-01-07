@@ -1,14 +1,17 @@
 import { lazy, Suspense } from "react";
-import Loading from "../../components/Loading";
-// import DescAbout from "../../components/DescAbout";
 const DescAbout = lazy(() => import("../../components/DescAbout"));
+import { ClientOnly } from "../../utils/clientOnly";
+import Loading from "../../components/Loading";
+
 export default function About() {
   return (
-    <Suspense fallback={<Loading />}>
-      <div>
-        <h2>About has SSR</h2>
-        <DescAbout />
-      </div>
-    </Suspense>
+    <div>
+      <h2>About has SSR</h2>
+      <Suspense fallback={<Loading />}>
+        <ClientOnly>
+          <DescAbout />
+        </ClientOnly>
+      </Suspense>
+    </div>
   );
 }
