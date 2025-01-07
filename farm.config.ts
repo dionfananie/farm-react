@@ -3,10 +3,12 @@ import path from "path";
 export default defineConfig({
   compilation: {
     input: {
-      index_client: "./index.html"
+      index_client: "./index.html",
     },
     output: {
-      path: "./build"
+      path: "./build",
+      publicPath: "/static/",
+      assetsFilename: "static/[resourceName].[hash].[ext]",
     },
     // sourcemap: true,
     css: {
@@ -14,9 +16,9 @@ export default defineConfig({
       //   indentName: 'farm-[name]-[hash]'
       // },
       prefixer: {
-        targets: ["last 2 versions", "Firefox ESR", "> 1%", "ie >= 11"]
-      }
-    }
+        targets: ["last 2 versions", "Firefox ESR", "> 1%", "ie >= 11"],
+      },
+    },
     // treeShaking: true,
     // minify: true,
   },
@@ -52,8 +54,8 @@ export default defineConfig({
 
           console.log("ctx.path outer", ctx.path);
         });
-      }
-    ]
+      },
+    ],
   },
-  plugins: ["@farmfe/plugin-react", "@farmfe/plugin-sass"]
+  plugins: ["@farmfe/plugin-react", "@farmfe/plugin-sass"],
 });
