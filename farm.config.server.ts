@@ -2,6 +2,7 @@ import { defineConfig } from "@farmfe/core";
 import { builtinModules } from "node:module";
 export default defineConfig({
   compilation: {
+    minify: false,
     input: {
       index: "./src/index-server.tsx",
     },

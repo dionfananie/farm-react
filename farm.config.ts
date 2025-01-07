@@ -10,7 +10,15 @@ export default defineConfig({
       publicPath: "/static/",
       assetsFilename: "static/[resourceName].[hash].[ext]",
     },
-    // sourcemap: true,
+    partialBundling: {
+      groups: [
+        {
+          name: "components",
+          test: ["./src/components"],
+        },
+      ],
+    },
+    sourcemap: true,
     css: {
       // modules: {
       //   indentName: 'farm-[name]-[hash]'
@@ -20,7 +28,7 @@ export default defineConfig({
       },
     },
     // treeShaking: true,
-    // minify: true,
+    minify: false,
   },
   server: {
     hmr: true,
