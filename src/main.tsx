@@ -1,40 +1,17 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import logo from "./assets/logo.png";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import NoMatch from "./pages/NoMatch";
 import Home from "./pages/Home";
 import Layout from "./Layout";
+import DescLazy from "./components/Desc/view";
+import DescSSR from "./pages/DescSSR";
 
 export default function App() {
   return (
     <div>
-      <h1>Server Rendering Example</h1>
-
-      <p>
-        If you check out the HTML source of this page, you'll notice that it
-        already contains the HTML markup of the app that was sent from the
-        server!
-      </p>
-
-      <img style={{ width: 350, height: 100 }} src={logo} alt="logo" />
-
-      <p>
-        This is great for search engines that need to index this page. It's also
-        great for users because server-rendered pages tend to load more quickly
-        on mobile devices and over slow networks.
-      </p>
-
-      <p>
-        Another thing to notice is that when you click one of the links below
-        and navigate to a different URL, then hit the refresh button on your
-        browser, the server is able to generate the HTML markup for that page as
-        well because you're using React Router on the server. This creates a
-        seamless experience both for your users navigating around your site and
-        for developers on your team who get to use the same routing library in
-        both places.
-      </p>
-
+      <DescSSR />
+      <DescLazy />
       {/* Routes nest inside one another. Nested route paths build upon
             parent route paths, and nested route elements render inside
             parent route elements. See the note about <Outlet> below. */}
