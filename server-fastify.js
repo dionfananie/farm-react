@@ -11,17 +11,16 @@ async function createServer() {
   const app = fastify({
     logger: true,
   });
-  console.log("path:", path.join(__dirname, "build"));
 
-  // Register static file handling
+  // Register static file handling after the main route
   await app.register(fastifyStatic, {
     root: path.join(__dirname, "build"),
-    prefix: "/", // serve all static files at root path
+    prefix: "/static/", // Changed to /static/ prefix to avoid conflicts
+    decorateReply: false, // Prevents conflicts with other plugins
   });
-  // Main route handler
-  app.get("/", async (request, reply) => {
-    let url = request.url;
 
+  // Catch-all route for other paths that should render the app
+  app.get("/*", async (request, reply) => {
     try {
       let template = await fsp.readFile(
         resolve("build/index_client.html"),
@@ -30,17 +29,17 @@ async function createServer() {
       const serverEntry = resolve("dist/index.js");
       const render = require(serverEntry);
 
-      const renderedHtml = render(url);
+      const renderedHtml = render(request.url);
       console.log(renderedHtml);
 
       let html = template.replace("{app-html-to-replace}", renderedHtml);
       console.log(template.includes("{app-html-to-replace}"));
       console.log(html.includes("{app-html-to-replace}"));
 
-      reply.type("text/html").code(200).send(html);
+      return reply.type("text/html").code(200).send(html);
     } catch (error) {
       console.log(error.stack);
-      reply.code(500).send(error.stack);
+      return reply.code(500).send(error.stack);
     }
   });
 
@@ -48,10 +47,8 @@ async function createServer() {
 }
 
 createServer().then((app) => {
-  const port = process.env.FARM_DEFAULT_SERVER_PORT || 3000;
-  app.listen({ port, host: "0.0.0.0" }, (err) => {
-    console.log("port: ", port);
-
+  const port = process.env.FARM_DEFAULT_SERVER_PORT || 3001;
+  app.listen({ port: port }, (err) => {
     if (err) {
       app.log.error(err);
       process.exit(1);
