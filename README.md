@@ -15,23 +15,29 @@ pnpm install
 Start the dev server:
 
 ```bash
-pnpm start
+bun run start
+```
+
+Start the development:
+
+```bash
+bun run dev
 ```
 
 Build the app for production:
 
 ```bash
-pnpm build
+bun run build
 ```
 
 Preview the Production build product:
 
 ```bash
-pnpm preview
+bun run serve
 ```
 
 Clear persistent cache local files
 
 ```bash
-pnpm clean
+bun run clean
 ```
